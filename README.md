@@ -1,10 +1,10 @@
-# zxtMaya_Suite
+﻿# zxtMaya_Suite
 
 本仓库是 zxt Maya 工具集的壳仓库，负责组合核心框架和各独立工具的 Git 子模块，并为 Maya 提供统一的 `.mod` 入口及部署脚本。
 
 ## 目录结构
 - `modules/<mayaVersion>/`：每个 Maya 版本的模块描述文件，运行生成脚本后会根据 `suite_manifest.json` 自动写入 `PYTHONPATH`、`MAYA_SCRIPT_PATH`、`XBMLANGPATH`。
-- `tools/`：辅助脚本目录，包含 `.mod` 自动生成、子模块清单等工具；后续会放置核心与各工具子模块（例如 `core/`、`tools/<tool_name>/`）。
+- `tools/`：辅助脚本目录，包含 `.mod` 自动生成、子模块清单等工具；后续会放置核心与各工具子模块（如 `core/`、`tools/<tool_name>/`）。
 - `docs/`：方案和使用文档。
 - `suite_manifest.json`：记录需要纳入套件的各子模块及其资源路径，供生成脚本与其他自动化使用。
 

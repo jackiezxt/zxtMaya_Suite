@@ -1,18 +1,12 @@
 {
   "suite_name": "MyMayaSuite",
   "version": "1.0",
-  "root": "d:/git/zxtMaya_Suite",
   "entries": [
     {
       "name": "core",
-      "python_paths": ["core/src"],
-      "script_paths": ["core/src"],
+      "python_paths": ["core/scripts"],
+      "script_paths": ["core/scripts"],
       "icon_paths": ["core/resources/icons"]
-    },
-    {
-      "name": "tool_example",
-      "python_paths": ["tools/tool_example/src"],
-      "script_paths": ["tools/tool_example/scripts"]
     }
   ]
 }
