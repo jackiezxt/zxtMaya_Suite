@@ -23,6 +23,18 @@
         "tools/zxtMaya_M2Ue/scripts"
       ],
       "icon_paths": []
+    },
+    {
+      "name": "zxtMaya_ConvertShader",
+      "python_paths": [
+        "tools/zxtMaya_ConvertShader/scripts"
+      ],
+      "script_paths": [
+        "tools/zxtMaya_ConvertShader/scripts"
+      ],
+      "icon_paths": [
+        "tools/zxtMaya_ConvertShader/resources/icons"
+      ]
     }
   ]
 }

@@ -9,3 +9,8 @@ XBMLANGPATH +:= core/resources/icons
 # zxtMaya_M2Ue
 PYTHONPATH +:= tools/zxtMaya_M2Ue/scripts
 MAYA_SCRIPT_PATH +:= tools/zxtMaya_M2Ue/scripts
+
+# zxtMaya_ConvertShader
+PYTHONPATH +:= tools/zxtMaya_ConvertShader/scripts
+MAYA_SCRIPT_PATH +:= tools/zxtMaya_ConvertShader/scripts
+XBMLANGPATH +:= tools/zxtMaya_ConvertShader/resources/icons

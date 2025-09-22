@@ -4,3 +4,6 @@
 [submodule "tools/zxtMaya_M2Ue"]
 	path = tools/zxtMaya_M2Ue
 	url = https://github.com/jackiezxt/zxtMaya_M2Ue.git
+[submodule "tools/zxtMaya_ConvertShader"]
+	path = tools/zxtMaya_ConvertShader
+	url = https://github.com/jackiezxt/zxtMaya_ConvertShader.git
