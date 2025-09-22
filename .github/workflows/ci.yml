@@ -96,3 +96,4 @@ jobs:
           echo "  \"C:\\Program Files\\Autodesk\\Maya2024\\bin\\mayapy.exe\" -m pip install -U pytest"
           echo "  \"C:\\Program Files\\Autodesk\\Maya2024\\bin\\mayapy.exe\" -m pytest"
           echo "Update the PR with results before merging."
+
