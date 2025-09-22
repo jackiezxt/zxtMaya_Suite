@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "../MyMayaTools"
+		},
+		{
+			"path": "../zxtMaya_ToolsCore"
+		},
+		{
+			"path": "../zxtMaya_M2Ue"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
+}
