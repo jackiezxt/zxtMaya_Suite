@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  suite-checks:
+    name: Validate manifest and .mod
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install tooling
+        run: python -m pip install --upgrade pip
+
+      - name: Validate manifest paths
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          manifest = json.loads(Path('suite_manifest.json').read_text(encoding='utf-8'))
+          missing = []
+          for entry in manifest.get('entries', []):
+              for key in ('python_paths', 'script_paths', 'icon_paths'):
+                  for rel in entry.get(key, []):
+                      path = Path(rel)
+                      if not path.exists():
+                          missing.append(f"Missing path for {entry.get('name')}: {rel}")
+          if missing:
+              raise SystemExit("\n".join(missing))
+          PY
+
+      - name: Generate Maya module file
+        run: python tools/generate_mod.py --maya 2024
+
+      - name: Ensure .mod output is up to date
+        run: git diff --exit-code modules/maya2024/MyMayaSuite.mod
+
+  core-tests:
+    name: Core pytest
+    runs-on: ubuntu-latest
+    needs: suite-checks
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install pytest
+        run: python -m pip install --upgrade pip pytest
+
+      - name: Run core tests
+        working-directory: core
+        run: python -m pytest

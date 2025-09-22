@@ -1,4 +1,4 @@
-﻿# zxtMaya_Suite
+# zxtMaya_Suite
 
 本仓库是 zxt Maya 工具集的壳仓库，负责组合核心框架和各独立工具的 Git 子模块，并为 Maya 提供统一的 `.mod` 入口及部署脚本。
 
@@ -37,4 +37,4 @@ python tools/generate_mod.py --maya 2024
 ## 后续工作
 - 将 `zxtMaya_ToolsCore` 与各工具仓库作为子模块引入。
 - 根据实际子模块路径调整 `suite_manifest.json`。
-- 在 `docs/` 补充 CI、发布和贡献指南。
+- 在 `docs/` 补充 CI、发布和贡献指南（参见 docs/ci.md）。
