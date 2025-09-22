@@ -27,3 +27,4 @@ popd
 ## 扩展建议
 - 若未来为其它子模块增设测试，可在 workflow 中追加新的 Job，或在 `core-tests` 内再运行 `python -m pytest`（通过 `working-directory` 指定）。
 - 需要 `mayapy` 测试时，建议在公司内部配置带 Maya 的 Windows Runner，把 `PYTHON` 指向 `mayapy`。
+

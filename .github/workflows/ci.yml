@@ -5,6 +5,12 @@ on:
     branches:
       - main
   pull_request:
+  workflow_dispatch:
+    inputs:
+      run_maya_tests:
+        description: "Run Maya-dependent tests manually"
+        type: boolean
+        default: false
 
 jobs:
   suite-checks:
@@ -72,3 +78,19 @@ jobs:
       - name: Run core tests
         working-directory: core
         run: python -m pytest
+
+  maya-tests:
+    name: Manual Maya pytest checklist
+    if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.run_maya_tests == 'true' }}
+    needs:
+      - suite-checks
+      - core-tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display manual instructions
+        run: |
+          echo "Maya-dependent tests must be run manually on a licensed machine."
+          echo "Suggested commands:"
+          echo "  \"C:\\Program Files\\Autodesk\\Maya2024\\bin\\mayapy.exe\" -m pip install -U pytest"
+          echo "  \"C:\\Program Files\\Autodesk\\Maya2024\\bin\\mayapy.exe\" -m pytest"
+          echo "Update the PR with results before merging."
