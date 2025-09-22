@@ -52,7 +52,7 @@ jobs:
           PY
 
       - name: Generate Maya module file
-        run: python tools/generate_mod.py --maya 2024
+        run: python tools/generate_mod.py --maya 2024 --relative
 
       - name: Ensure .mod output is up to date
         run: git diff --exit-code modules/maya2024/MyMayaSuite.mod
