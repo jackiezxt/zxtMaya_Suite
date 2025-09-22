@@ -33,26 +33,10 @@ jobs:
         run: python -m pip install --upgrade pip
 
       - name: Validate manifest paths
-        shell: bash
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-
-          manifest = json.loads(Path('suite_manifest.json').read_text(encoding='utf-8'))
-          missing = []
-          for entry in manifest.get('entries', []):
-              for key in ('python_paths', 'script_paths', 'icon_paths'):
-                  for rel in entry.get(key, []):
-                      path = Path(rel)
-                      if not path.exists():
-                          missing.append(f"Missing path for {entry.get('name')}: {rel}")
-          if missing:
-              raise SystemExit("\n".join(missing))
-          PY
+        run: python tools/generate_mod.py --validate
 
       - name: Generate Maya module file
-        run: python tools/generate_mod.py --maya 2024 --relative
+        run: python tools/generate_mod.py --maya 2024
 
       - name: Ensure .mod output is up to date
         run: git diff --exit-code modules/maya2024/MyMayaSuite.mod
@@ -96,4 +80,3 @@ jobs:
           echo "  \"C:\\Program Files\\Autodesk\\Maya2024\\bin\\mayapy.exe\" -m pip install -U pytest"
           echo "  \"C:\\Program Files\\Autodesk\\Maya2024\\bin\\mayapy.exe\" -m pytest"
           echo "Update the PR with results before merging."
-
