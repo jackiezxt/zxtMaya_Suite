@@ -37,3 +37,13 @@
 5. 更新文档和 CI，确保每个新仓库、壳仓库以及核心都有明确的测试/发布流程。
 
 用这份记录可以在连接中断后快速继续对应的迁移步骤。
+
+## 目标工具仓库映射
+- `zxtMaya_Alembic`：合并 `alembic_exporter`, `alembic_mtl`, `alembic_renderSetup`, `lookdev_transfer`。
+- `zxtMaya_Validate`：合并 `model_check`, `scene_clean`, `uv_check`, `validate`。
+- `zxtMaya_AntiVirus`：迁移 `zxtAntiVirus`。
+- `zxtMaya_ConvertShader`：迁移 `vertpipe_maya/plugins/zxtConvertShaders`。
+- `zxtMaya_M2Ue`：整合 `vertpipe_maya/plugins/zxtMaya2Ue`、`zxtM2UeXgen`。
+- `zxtMaya_Arnold`：迁移 `MyMayaTools/plugins/zxtArnoldCTRL`。
+- 其余旧插件（`instanceAlongCurve`, `zxtModClean`, `zxtRenderSetting`, `zxtScnClear`）暂归档，后续视需要重写。
+
