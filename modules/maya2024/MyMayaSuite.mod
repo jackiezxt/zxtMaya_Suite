@@ -5,3 +5,7 @@
 PYTHONPATH +:= D:/GIT/zxtMaya_Suite/core/scripts
 MAYA_SCRIPT_PATH +:= D:/GIT/zxtMaya_Suite/core/scripts
 XBMLANGPATH +:= D:/GIT/zxtMaya_Suite/core/resources/icons
+
+# zxtMaya_M2Ue
+PYTHONPATH +:= D:/GIT/zxtMaya_Suite/tools/zxtMaya_M2Ue/scripts
+MAYA_SCRIPT_PATH +:= D:/GIT/zxtMaya_Suite/tools/zxtMaya_M2Ue/scripts

@@ -4,9 +4,25 @@
   "entries": [
     {
       "name": "core",
-      "python_paths": ["core/scripts"],
-      "script_paths": ["core/scripts"],
-      "icon_paths": ["core/resources/icons"]
+      "python_paths": [
+        "core/scripts"
+      ],
+      "script_paths": [
+        "core/scripts"
+      ],
+      "icon_paths": [
+        "core/resources/icons"
+      ]
+    },
+    {
+      "name": "zxtMaya_M2Ue",
+      "python_paths": [
+        "tools/zxtMaya_M2Ue/scripts"
+      ],
+      "script_paths": [
+        "tools/zxtMaya_M2Ue/scripts"
+      ],
+      "icon_paths": []
     }
   ]
 }
