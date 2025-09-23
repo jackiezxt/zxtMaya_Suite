@@ -54,4 +54,9 @@
 - `zxtMaya_ConvertShader`：迁移 `vertpipe_maya/plugins/zxtConvertShaders`。
 - `zxtMaya_M2Ue`：整合 `vertpipe_maya/plugins/zxtMaya2Ue`、`zxtM2UeXgen`。
 - `zxtMaya_Arnold`：迁移 `MyMayaTools/plugins/zxtArnoldCTRL`。
-- 其余旧插件（`instanceAlongCurve`, `zxtModClean`, `zxtRenderSetting`, `zxtScnClear`）暂归档，后续视需要重写。
+- ~~`zxtModClean`：功能已由 `zxtMaya_Validate` 替代，准备移除旧插件。~~
+- ~~`zxtRenderSetting`：功能已由 `zxtMaya_Validate` 替代，准备移除旧插件。~~
+- ~~`zxtScnClear`：功能已由 `zxtMaya_Validate` 替代，准备移除旧插件。~~
+- 其余旧插件（如 `instanceAlongCurve`）暂归档，后续视需要重写。
+
+

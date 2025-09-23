@@ -11,6 +11,12 @@
 		},
 		{
 			"path": "."
+		},
+		{
+			"path": "../proj_cs_tools/maya_tools"
+		},
+		{
+			"path": "../vertpipe_maya"
 		}
 	],
 	"settings": {}
