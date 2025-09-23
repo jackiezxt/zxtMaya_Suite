@@ -60,3 +60,7 @@
 - 其余旧插件（如 `instanceAlongCurve`）暂归档，后续视需要重写。
 
 
+### 子模块协同开发记录
+- 协作时直接在 `zxtMaya_ToolsCore` 仓库开分支提交，评审合并后再同步至主仓。
+- 更新 `zxtMaya_Suite` 时，先在根目录执行 `git submodule update --remote core`（或进入 `core/` 执行 `git pull`）以获取最新提交。
+- 同步后在 `zxtMaya_Suite` 中提交一次，记录子模块指向的新 commit，确保 CI 与团队环境指向同一版本。
