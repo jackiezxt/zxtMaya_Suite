@@ -24,3 +24,8 @@ XBMLANGPATH +:= tools/zxtMaya_AntiVirus/resources/icons
 PYTHONPATH +:= tools/zxtMaya_Alembic/scripts
 MAYA_SCRIPT_PATH +:= tools/zxtMaya_Alembic/scripts
 XBMLANGPATH +:= tools/zxtMaya_Alembic/resources/icons
+
+# zxtMaya_Validate
+PYTHONPATH +:= tools/zxtMaya_Validate/scripts
+MAYA_SCRIPT_PATH +:= tools/zxtMaya_Validate/scripts
+XBMLANGPATH +:= tools/zxtMaya_Validate/resources/icons

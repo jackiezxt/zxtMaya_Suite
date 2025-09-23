@@ -13,3 +13,6 @@
 [submodule "tools/zxtMaya_Alembic"]
 	path = tools/zxtMaya_Alembic
 	url = https://github.com/jackiezxt/zxtMaya_Alembic.git
+[submodule "tools/zxtMaya_Validate"]
+	path = tools/zxtMaya_Validate
+	url = https://github.com/jackiezxt/zxtMaya_Validate.git

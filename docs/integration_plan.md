@@ -6,7 +6,7 @@
 - [x] zxtMaya_ConvertShader：已拆分并接入套件
 - [x] zxtMaya_AntiVirus：已拆分并接入套件
 - [x] zxtMaya_Alembic：已拆分并接入套件
-- [ ] zxtMaya_Validate：待拆分
+- [x] zxtMaya_Validate：已拆分并接入套件
 
 ## 核心 (`zxtMaya_ToolsCore`)
 - 吸收 `proj_cs_tools/maya_tools/common` 中的配置、路径、Maya utils，拆分为 `core/config`, `core/utils/maya`, `core/pipeline/asset_manager` 并补充单测。
@@ -54,4 +54,3 @@
 - `zxtMaya_M2Ue`：整合 `vertpipe_maya/plugins/zxtMaya2Ue`、`zxtM2UeXgen`。
 - `zxtMaya_Arnold`：迁移 `MyMayaTools/plugins/zxtArnoldCTRL`。
 - 其余旧插件（`instanceAlongCurve`, `zxtModClean`, `zxtRenderSetting`, `zxtScnClear`）暂归档，后续视需要重写。
-

@@ -59,6 +59,18 @@
       "icon_paths": [
         "tools/zxtMaya_Alembic/resources/icons"
       ]
+    },
+    {
+      "name": "zxtMaya_Validate",
+      "python_paths": [
+        "tools/zxtMaya_Validate/scripts"
+      ],
+      "script_paths": [
+        "tools/zxtMaya_Validate/scripts"
+      ],
+      "icon_paths": [
+        "tools/zxtMaya_Validate/resources/icons"
+      ]
     }
   ]
 }
