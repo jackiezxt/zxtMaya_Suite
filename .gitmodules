@@ -10,3 +10,6 @@
 [submodule "tools/zxtMaya_AntiVirus"]
 	path = tools/zxtMaya_AntiVirus
 	url = https://github.com/jackiezxt/zxtMaya_AntiVirus.git
+[submodule "tools/zxtMaya_Alembic"]
+	path = tools/zxtMaya_Alembic
+	url = https://github.com/jackiezxt/zxtMaya_Alembic.git

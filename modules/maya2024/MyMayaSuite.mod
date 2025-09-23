@@ -19,3 +19,8 @@ XBMLANGPATH +:= tools/zxtMaya_ConvertShader/resources/icons
 PYTHONPATH +:= tools/zxtMaya_AntiVirus/scripts
 MAYA_SCRIPT_PATH +:= tools/zxtMaya_AntiVirus/scripts
 XBMLANGPATH +:= tools/zxtMaya_AntiVirus/resources/icons
+
+# zxtMaya_Alembic
+PYTHONPATH +:= tools/zxtMaya_Alembic/scripts
+MAYA_SCRIPT_PATH +:= tools/zxtMaya_Alembic/scripts
+XBMLANGPATH +:= tools/zxtMaya_Alembic/resources/icons

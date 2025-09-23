@@ -1,5 +1,13 @@
 # 工具仓库整合规划
 
+
+### 当前进度
+
+- [x] zxtMaya_ConvertShader：已拆分并接入套件
+- [x] zxtMaya_AntiVirus：已拆分并接入套件
+- [x] zxtMaya_Alembic：已拆分并接入套件
+- [ ] zxtMaya_Validate：待拆分
+
 ## 核心 (`zxtMaya_ToolsCore`)
 - 吸收 `proj_cs_tools/maya_tools/common` 中的配置、路径、Maya utils，拆分为 `core/config`, `core/utils/maya`, `core/pipeline/asset_manager` 并补充单测。
 - 从 `vertpipe_maya/pythonScripts/zxtToolCommon.py` 提取仍通用的几何/场景操作，与现有核心工具整理合并。

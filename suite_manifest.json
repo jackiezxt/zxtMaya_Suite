@@ -47,6 +47,18 @@
       "icon_paths": [
         "tools/zxtMaya_AntiVirus/resources/icons"
       ]
+    },
+    {
+      "name": "zxtMaya_Alembic",
+      "python_paths": [
+        "tools/zxtMaya_Alembic/scripts"
+      ],
+      "script_paths": [
+        "tools/zxtMaya_Alembic/scripts"
+      ],
+      "icon_paths": [
+        "tools/zxtMaya_Alembic/resources/icons"
+      ]
     }
   ]
 }
