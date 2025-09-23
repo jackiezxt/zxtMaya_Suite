@@ -14,3 +14,8 @@ MAYA_SCRIPT_PATH +:= tools/zxtMaya_M2Ue/scripts
 PYTHONPATH +:= tools/zxtMaya_ConvertShader/scripts
 MAYA_SCRIPT_PATH +:= tools/zxtMaya_ConvertShader/scripts
 XBMLANGPATH +:= tools/zxtMaya_ConvertShader/resources/icons
+
+# zxtMaya_AntiVirus
+PYTHONPATH +:= tools/zxtMaya_AntiVirus/scripts
+MAYA_SCRIPT_PATH +:= tools/zxtMaya_AntiVirus/scripts
+XBMLANGPATH +:= tools/zxtMaya_AntiVirus/resources/icons

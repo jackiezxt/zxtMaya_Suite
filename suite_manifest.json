@@ -35,6 +35,18 @@
       "icon_paths": [
         "tools/zxtMaya_ConvertShader/resources/icons"
       ]
+    },
+    {
+      "name": "zxtMaya_AntiVirus",
+      "python_paths": [
+        "tools/zxtMaya_AntiVirus/scripts"
+      ],
+      "script_paths": [
+        "tools/zxtMaya_AntiVirus/scripts"
+      ],
+      "icon_paths": [
+        "tools/zxtMaya_AntiVirus/resources/icons"
+      ]
     }
   ]
 }
