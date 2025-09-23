@@ -7,6 +7,7 @@
 - [x] zxtMaya_AntiVirus：已拆分并接入套件
 - [x] zxtMaya_Alembic：已拆分并接入套件
 - [x] zxtMaya_Validate：已拆分并接入套件
+- [x] zxtMaya_Arnold：已拆分并接入套件
 
 ## 核心 (`zxtMaya_ToolsCore`)
 - 吸收 `proj_cs_tools/maya_tools/common` 中的配置、路径、Maya utils，拆分为 `core/config`, `core/utils/maya`, `core/pipeline/asset_manager` 并补充单测。

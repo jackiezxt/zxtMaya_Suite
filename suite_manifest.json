@@ -71,6 +71,18 @@
       "icon_paths": [
         "tools/zxtMaya_Validate/resources/icons"
       ]
+    },
+    {
+      "name": "zxtMaya_Arnold",
+      "python_paths": [
+        "tools/zxtMaya_Arnold/scripts"
+      ],
+      "script_paths": [
+        "tools/zxtMaya_Arnold/scripts"
+      ],
+      "icon_paths": [
+        "tools/zxtMaya_Arnold/resources/icons"
+      ]
     }
   ]
 }

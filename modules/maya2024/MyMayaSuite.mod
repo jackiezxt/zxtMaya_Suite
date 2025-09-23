@@ -29,3 +29,8 @@ XBMLANGPATH +:= tools/zxtMaya_Alembic/resources/icons
 PYTHONPATH +:= tools/zxtMaya_Validate/scripts
 MAYA_SCRIPT_PATH +:= tools/zxtMaya_Validate/scripts
 XBMLANGPATH +:= tools/zxtMaya_Validate/resources/icons
+
+# zxtMaya_Arnold
+PYTHONPATH +:= tools/zxtMaya_Arnold/scripts
+MAYA_SCRIPT_PATH +:= tools/zxtMaya_Arnold/scripts
+XBMLANGPATH +:= tools/zxtMaya_Arnold/resources/icons
