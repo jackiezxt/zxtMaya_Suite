@@ -4,3 +4,4 @@ __pycache__/
 *.zip
 .idea/
 .vscode/
+activate_maya.ps1 
