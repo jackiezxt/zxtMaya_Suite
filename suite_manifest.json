@@ -15,6 +15,16 @@
       ]
     },
     {
+      "name": "zxtMaya_UIFramework",
+      "python_paths": [
+        "tools/zxtMaya_UIFramework/scripts"
+      ],
+      "script_paths": [
+        "tools/zxtMaya_UIFramework/scripts"
+      ],
+      "icon_paths": []
+    },
+    {
       "name": "zxtMaya_M2Ue",
       "python_paths": [
         "tools/zxtMaya_M2Ue/scripts"
