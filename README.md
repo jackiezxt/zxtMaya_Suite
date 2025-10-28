@@ -1,40 +1,57 @@
 # zxtMaya_Suite
 
-本仓库是 zxt Maya 工具集的壳仓库，负责组合核心框架和各独立工具的 Git 子模块，并为 Maya 提供统一的 `.mod` 入口及部署脚本。
+Main wrapper repository for the zxt Maya tool suite. It aggregates the shared core runtime plus individual tool repositories (via Git submodules), generates Maya `.mod` entries, and packages everything into a coherent menu/shelf experience.
 
-## 目录结构
-- `modules/<mayaVersion>/`：每个 Maya 版本的模块描述文件，运行生成脚本后会根据 `suite_manifest.json` 自动写入 `PYTHONPATH`、`MAYA_SCRIPT_PATH`、`XBMLANGPATH`。
-- `tools/`：辅助脚本目录，包含 `.mod` 自动生成、子模块清单等工具；后续会放置核心与各工具子模块（如 `core/`、`tools/<tool_name>/`）。
-- `docs/`：方案和使用文档。
-- `suite_manifest.json`：记录需要纳入套件的各子模块及其资源路径，供生成脚本与其他自动化使用。
+## Repository Layout
+- `core/` – shared runtime, manifest loader, and startup scripts. Tests live in `core/tests`.
+- `tools/<ToolName>/` – Git submodules pointing to individual tool repos (e.g., `tools/zxtMaya_Arnold`). Each tool maintains its own `scripts/`, resources, and `tool_manifest.yaml`.
+- `docs/` – contributor guides (`dev_workflow.md`, `suite_architecture_plan.md`, etc.).
+- `modules/<mayaVersion>/` – generated Maya module descriptors; `tools/generate_mod.py` keeps them in sync with the manifest.
+- `suite_manifest.json` – top-level list of components (core + tools) used when producing `.mod` files.
 
-## 初次克隆
+## Getting Started
 ```powershell
-git clone <repo-url> d:\git\zxtMaya_Suite
-cd d:\git\zxtMaya_Suite
+git clone https://github.com/jackiezxt/zxtMaya_Suite.git
+cd zxtMaya_Suite
 git submodule update --init --recursive
 ```
-> 若仓库中尚未添加子模块，以上命令会跳过；请参考下文添加核心与工具仓库。
-
-## 添加子模块
+To update a specific tool:
 ```powershell
-git submodule add <core-repo-url> core
-git submodule add <tool-repo-url> tools/<tool_name>
-git commit -am "Add core/tool submodule"
+git submodule update --remote tools/zxtMaya_Arnold
 ```
-完成后在 `suite_manifest.json` 中补充对应条目，或运行 `tools/list_modules.ps1` 查看当前登记的模块。
-
-## 生成 `.mod`
+Then regenerate manifests and run tests:
 ```powershell
+python tools/generate_mod.py --validate
 python tools/generate_mod.py --maya 2024
+python -m pytest core/tests
 ```
-脚本会读取 `suite_manifest.json`，并更新 `modules/maya2024/MyMayaSuite.mod`。请根据需要为其他 Maya 版本执行同样命令。
 
-## Maya 配置
-1. 将 `modules/<mayaVersion>` 加入 `MAYA_MODULE_PATH`。
-2. 启动 Maya 后验证核心菜单 / 工具是否加载；若有问题，检查 `.mod` 内路径是否指向有效子模块。
+## `tool_manifest.yaml`
+Each tool exposes menu/shelf metadata through `tool_manifest.yaml`:
+```yaml
+tool:
+  name: zxtMaya_Arnold
+  entry_point: "from zxt_arnold import show; show()"
+menus:
+  - menu: zxtMaya
+    category: Rendering
+    items:
+      - label: Arnold AOV Setup
+        command: "from zxt_arnold import show; show()"
+        source: python
+```
+During startup `core/scripts/userSetup.py` loads every manifest, prepends the relevant `scripts/` folders to `sys.path`, and registers menus/shelves automatically.
 
-## 后续工作
-- 将 `zxtMaya_ToolsCore` 与各工具仓库作为子模块引入。
-- 根据实际子模块路径调整 `suite_manifest.json`。
-- 在 `docs/` 补充 CI、发布和贡献指南（参见 docs/ci.md）。
+## Launching Maya Locally
+Use the helper script to bootstrap environment variables and launch Maya 2026:
+```bat
+start_maya_suite.bat
+```
+
+## Contribution Workflow (summary)
+1. Develop inside the tool’s submodule (`tools/<ToolName>`), add tests, and push to its repository.
+2. In `zxtMaya_Suite`, run `git submodule update --remote tools/<ToolName>` and `git add tools/<ToolName>` to bump the pointer.
+3. Regenerate `.mod`, run `python -m pytest core/tests`, and commit.
+4. Open a PR describing affected tools and the commands you executed. CI will re-run manifest validation and pytest.
+
+For detailed instructions, see `docs/dev_workflow.md` and `docs/ci.md`.
