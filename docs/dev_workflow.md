@@ -23,19 +23,25 @@
 
 ## 同步到主仓
 1. 在主仓根目录拉最新：`git pull`。
+2. 解析共享依赖：`python tools/setup_env.py --env maya --format text`（或在 CI/Launcher 中运行 resolver），确认 `bundle_cache` 新版本。
+3. 更新子模块指针（可封装脚本）：
+   ```bash
+   git submodule update --remote tools/zxtMaya_M2Ue
+   git add tools/zxtMaya_M2Ue
+   ```
 2. 更新子模块指针（可封装脚本）：
    ```bash
    git submodule update --remote tools/zxtMaya_M2Ue
    git add tools/zxtMaya_M2Ue
    ```
-3. 运行校验脚本：
+4. 运行校验脚本：
    ```bash
    python tools/generate_mod.py --validate
    python tools/generate_mod.py --maya 2024
    ```
-4. 跑核心测试：`python -m pytest core/tests`。
-5. 提交并推送主仓：`git commit -m "Update zxtMaya_M2Ue"` → `git push`。
-6. 创建 PR，等待 CI（manifest 校验 + core pytest）通过后合并。
+5. 跑核心测试：`python -m pytest core/tests`。
+6. 提交并推送主仓：`git commit -m "Update zxtMaya_M2Ue"` → `git push`。
+7. 创建 PR，等待 CI（manifest 校验 + core pytest）通过后合并。
 
 ## 菜单与 manifest 约定
 - 每个工具需要 `tool_manifest.yaml`，字段包括 `tool`、`menus`、`shelves`、`dependencies`。

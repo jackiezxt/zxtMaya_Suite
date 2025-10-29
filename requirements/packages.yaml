@@ -1,5 +1,14 @@
 packages:
   python:
-  - name: zxtUI_Library
-    version: 0.1.0
-    path: tools/zxtUI_Library
+    zxtUI_Library:
+      version: 0.1.0
+      location:
+        type: path
+        path: tools/zxtUI_Library
+environments:
+  default:
+    python:
+    - zxtUI_Library
+  maya:
+    python:
+    - zxtUI_Library

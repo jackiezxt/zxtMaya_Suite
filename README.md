@@ -19,8 +19,10 @@ To update a specific tool:
 ```powershell
 git submodule update --remote tools/zxtMaya_Arnold
 ```
-Then regenerate manifests and run tests:
+Then resolve shared packages and regenerate manifests/tests:
 ```powershell
+python tools/setup_env.py --env maya --format text
+python tools/generate_mod.py --validate
 python tools/generate_mod.py --validate
 python tools/generate_mod.py --maya 2024
 python -m pytest core/tests

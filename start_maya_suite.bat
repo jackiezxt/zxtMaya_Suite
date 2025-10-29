@@ -14,9 +14,15 @@ set "QT_API=pyside2"
 
 echo Maya 2026 environment activated from %CONDA_ENV%
 
-rem Configure suite paths for Maya
+rem Resolve and append suite dependencies
+pushd "%REPO_ROOT%" >nul
+for /f "usebackq tokens=* delims=" %%i in (`python tools/setup_env.py --env maya --format bat`) do call %%i
+popd >nul
+
+rem Configure module path for Maya
 set "MAYA_MODULE_PATH=%REPO_ROOT%;%MAYA_MODULE_PATH%"
 set "PYTHONPATH=%REPO_ROOT%\core\scripts;%PYTHONPATH%"
+
 echo Using repository root: %REPO_ROOT%
 
 echo Launching Maya...
