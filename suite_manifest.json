@@ -92,5 +92,14 @@
         "tools/zxtMaya_Arnold/resources/icons"
       ]
     }
-  ]
+  ],
+  "packages": {
+    "python": [
+      {
+        "name": "zxtUI_Library",
+        "version": "0.1.0",
+        "source": "submodule"
+      }
+    ]
+  }
 }

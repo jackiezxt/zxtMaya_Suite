@@ -47,3 +47,21 @@
 ## Notes
 - Retain ASCII-only paths and keep configuration in JSON or YAML for consistent automation.
 - Document new workflows in `docs/` (for example, metadata schema and launcher usage) as features mature.
+
+
+## Bundle Cache & YAML Configuration (Planned)
+- Move away from git submodules for shared libraries; adopt ShotGrid-style YAML descriptors that list required packages and versions.
+- Standard design:
+  - `requirements/packages.yaml` enumerates shared dependencies (e.g., `zxtUI_Library`), with location types (`git`, `path`) and version pins.
+  - A bundle cache directory (e.g., `%APPDATA%/zxtTools/bundle_cache`) stores downloaded dependencies; the cache is shared across all suites and launcher.
+  - A resolver script reads YAML, downloads/upgrades packages into the cache, and exposes the paths to each environment (Maya, Nuke, UE, etc.).
+- Adapt existing startup scripts (`start_maya_suite.bat` / future launcher) to parse YAML, inject resolved paths into `sys.path`/environment, and replace manual submodule pointers.
+- Benefits:
+  - One central UI library (and other shared packages) with version control via YAML.
+  - Easier cross-suite upgrades—update YAML once, run resolver everywhere.
+  - launcher can reuse the same package cache for all DCCs.
+- Incremental plan:
+  1. Implement resolver/loader for Maya suite.
+  2. Update tools to read manifests from resolved cache paths.
+  3. Extend same mechanism to future suites (`zxtNuke_Suite`, `zxtUE_Suite`, etc.) and `zxtPipeline_Launcher`.
+
