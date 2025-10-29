@@ -19,3 +19,6 @@
 [submodule "tools/zxtMaya_Arnold"]
 	path = tools/zxtMaya_Arnold
 	url = https://github.com/jackiezxt/zxtMaya_Arnold.git
+[submodule "tools/zxtUI_Library"]
+	path = tools/zxtUI_Library
+	url = https://github.com/jackiezxt/zxtUI_Library.git

@@ -6,9 +6,8 @@ PYTHONPATH +:= core/scripts
 MAYA_SCRIPT_PATH +:= core/scripts
 XBMLANGPATH +:= core/resources/icons
 
-# zxtMaya_UIFramework
-PYTHONPATH +:= tools/zxtMaya_UIFramework/scripts
-MAYA_SCRIPT_PATH +:= tools/zxtMaya_UIFramework/scripts
+# zxtUI_Library
+PYTHONPATH +:= tools/zxtUI_Library
 
 # zxtMaya_M2Ue
 PYTHONPATH +:= tools/zxtMaya_M2Ue/scripts
