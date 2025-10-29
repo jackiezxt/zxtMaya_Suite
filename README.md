@@ -28,6 +28,16 @@ python tools/generate_mod.py --maya 2024
 python -m pytest core/tests
 ```
 
+### Shared Package Resolver
+`requirements/packages.yaml` centralises shared bundles for every suite. Descriptors include:
+
+- `type: path` for folders already inside this repository (e.g., `tools/zxtUI_Library`).
+- `type: git` for cloning tagged commits into the bundle cache.
+- `type: github_release` or `type: zip` for pulling tagged archives (with optional release assets) without maintaining submodules.
+
+Categories map to environment variables: `python` entries extend `PYTHONPATH`, while `tool_roots` populate `ZXT_MAYA_PACKAGE_ROOTS` so the Maya bootstrap can locate bundle-cached tools. Run `python tools/setup_env.py --env maya --format text` to resolve packages into `%APPDATA%\zxtTools\bundle_cache` and emit these exports for launchers.
+
+
 ## `tool_manifest.yaml`
 Each tool exposes menu/shelf metadata through `tool_manifest.yaml`:
 ```yaml

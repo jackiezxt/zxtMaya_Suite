@@ -5,10 +5,47 @@ packages:
       location:
         type: path
         path: tools/zxtUI_Library
+  tool_roots:
+    zxtMaya_M2Ue:
+      version: 0.1.0
+      location:
+        type: path
+        path: tools/zxtMaya_M2Ue
+    zxtMaya_Arnold:
+      version: 0.1.0
+      location:
+        type: path
+        path: tools/zxtMaya_Arnold
+    zxtMaya_ConvertShader:
+      version: 0.1.0
+      location:
+        type: path
+        path: tools/zxtMaya_ConvertShader
+    zxtMaya_AntiVirus:
+      version: 0.1.0
+      location:
+        type: path
+        path: tools/zxtMaya_AntiVirus
+    zxtMaya_Alembic:
+      version: 0.1.0
+      location:
+        type: path
+        path: tools/zxtMaya_Alembic
+    zxtMaya_Validate:
+      version: 0.1.0
+      location:
+        type: path
+        path: tools/zxtMaya_Validate
 environments:
-  default:
-    python:
-    - zxtUI_Library
   maya:
     python:
     - zxtUI_Library
+    tool_roots:
+    - zxtMaya_M2Ue
+    - zxtMaya_Arnold
+    - zxtMaya_ConvertShader
+    - zxtMaya_AntiVirus
+    - zxtMaya_Alembic
+    - zxtMaya_Validate
+  default:
+    inherits: maya

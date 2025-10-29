@@ -1,19 +1,34 @@
-# 仓库指南
+﻿# Repository Guidelines
 
-## 项目结构与模块组织
-`core/` 存放共享运行时（脚本、资源、配置与测试）。工具仓以 Git 子模块形式位于 `tools/<ToolName>`，各自维护 `scripts/` 目录与 `tool_manifest.yaml`。方案文档集中在 `docs/`。`suite_manifest.json` 与生成后的 `modules/<mayaVersion>/*.mod` 描述 Maya 中的挂载方式。共享 UI 组件由 `requirements/packages.yaml` 注册（如 `zxtUI_Library`）。
+## Project Structure & Module Organization
+- `core/` hosts the shared runtime, configuration loaders, and tests; `docs/` captures workflow notes and onboarding guides.
+- Each Maya tool lives in a Git submodule under `tools/<ToolName>` with its own `scripts/`, `tool_manifest.yaml`, and optional `requirements/` folder.
+- Shared libraries and tool bundles are declared in `requirements/packages.yaml`; the resolver copies them to `%APPDATA%\zxtTools\bundle_cache` and publishes roots through `ZXT_MAYA_PACKAGE_ROOTS`.
 
-## 构建、测试与开发命令
-在仓库根目录执行：`python tools/generate_mod.py --validate` 校验 manifest 路径；`python tools/generate_mod.py --maya 2024` 重新生成 `.mod`。核心测试使用 `python -m pytest core/tests`。更新某个子模块时运行 `git submodule update --remote tools/<ToolName>`，随后 `git add tools/<ToolName>`。本地调试可直接使用 `start_maya_suite.bat` 预配置 Maya 启动环境。
+## Build, Test, and Development Commands
+- Activate the suite environment with `conda activate maya_2026`.
+- Resolve dependencies via `python tools/setup_env.py --env maya --format text`; the output includes `PYTHONPATH` and `ZXT_MAYA_PACKAGE_ROOTS` assignments suitable for launchers.
+- Run the full test suite with `python -m pytest core/tests`; target resolver-only coverage via `python -m pytest core/tests/test_setup_env.py`.
+- Launch Maya with pre-configured paths by double-clicking `start_maya_suite.bat`.
 
-## 编码风格与命名约定
-采用 Python 3.10+、4 空格缩进，使用类型注解和 `logging`（避免 `print`）。工具 manifest 统一使用 YAML（`tool_manifest.yaml`），键名小写、标识符采用 snake_case。共享辅助代码放在 `core/scripts/core/`，工具相关逻辑留在子模块内部。Qt 代码需兼容 PySide2、PySide6 与 PyQt5 的回退。
+## Coding Style & Naming Conventions
+- Python uses 4-space indentation, type hints, and `logging` instead of `print`.
+- Keep JSON/YAML minimal and snake_case; reference paths relative to the repo root.
+- Qt UI helpers should gracefully fall back between PySide2/PySide6/PyQt5 and live under `scripts/packages/<package>`.
 
-## 测试指引
-默认使用 PyTest。`core/tests/` 中按源码结构组织测试（文件 `test_<module>.py`，函数命名体现行为）。鼓励每个工具子模块维护独立 `tests/` 目录，用于 smoke/unit 覆盖。提交 PR 前务必运行 manifest 校验与 `python -m pytest core/tests`，并在必要时附上工具级测试命令。
+## Testing Guidelines
+- Mirror package structure when adding tests under `core/tests`, naming files `test_<module>.py`.
+- Use lightweight smoke tests to validate menu registration when adding new tool manifests.
+- Before opening a PR, run `python -m pytest core/tests` and capture the command/output in the PR description.
 
-## 提交与 PR 规范
-提交信息使用祈使句（如 `Switch UI library to zxtUI_Library`）。更新子模块时说明受影响工具，并附上 `generate_mod.py`、pytest 输出。PR 描述需列出改动工具、manifest 调整，并在涉及 Maya 菜单改动时附截图或 GIF。合并前须通过 CI（`suite-checks`、`core-tests`）。
+## Commit & Pull Request Guidelines
+- Write imperative commit titles such as `Add github_release resolver`; explain cross-repo impacts and bundle-cache changes in the body.
+- PRs should document scope, executed commands, and any updated docs (`README.md`, `docs/dev_workflow.md`).
+- Include repro steps plus screenshots or GIFs when changing menus, manifests, or launcher behavior.
 
-## 安全与配置提示
-勿提交密码或机器专用路径。共享依赖写在 `requirements/packages.yaml`，解析后放入 `bundle_cache`。若需纳入第三方库，请放在 `core/scripts/packages/thirdparty/` 并标注文档。Windows 路径保持 ASCII，以避免 Maya 加载异常。
+## Environment Resolution & Security
+- `tools/setup_env.py` supports `path`, `git`, `github_release`, and generic `zip` descriptors; missing fields raise actionable errors.
+- The resolver maps category outputs to environment variables (`PYTHONPATH`, `ZXT_MAYA_PACKAGE_ROOTS`) so launchers can bootstrap Maya without shell scripts.
+- The bundle cache stores only shared libraries—never project data or secrets. Track the exact version/tag for any vendored third-party code for auditability.
+
+- Use Chinese in dialog, and in markdown files

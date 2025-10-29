@@ -1,73 +1,63 @@
-# 开发流程指南
+﻿# 开发流程指南
 
-本指南说明如何在独立工具仓和 `zxtMaya_Suite` 主仓之间协作，保持菜单/manifest 的自动化工作。
+本指南概述在 `zxtMaya_Suite` 主仓与各工具子仓之间协作开发的推荐流程，并解释共享依赖解析器与 bundle cache 的使用方式。
 
-## 环境准备
-- 克隆主仓：`git clone git@github.com:jackiezxt/zxtMaya_Suite.git`。
-- 初始化子模块：`git submodule update --init --recursive`。
-- Maya 调试可直接运行 `start_maya_suite.bat`，自动设置 `PYTHONPATH`、`MAYA_MODULE_PATH`。
+## 准备工作
+- 克隆主仓：`git clone git@github.com:jackiezxt/zxtMaya_Suite.git`
+- 初始化子模块：`git submodule update --init --recursive`
+- 激活 Maya Python 环境：`conda activate maya_2026`
+- 解析共享依赖（首次或依赖更新后执行）：`python tools/setup_env.py --env maya --format text`，输出中同时写入 `PYTHONPATH` 与 `ZXT_MAYA_PACKAGE_ROOTS`
+- 本地启动 Maya：双击 `start_maya_suite.bat`，脚本会调用解析器并配置 `PYTHONPATH`/`MAYA_MODULE_PATH`/`ZXT_MAYA_PACKAGE_ROOTS`
 
-## 开发单个工具
-1. 在子模块目录直接工作，例如 `tools/zxtMaya_M2Ue`（此目录本身就是独立仓库）。
-2. 修改代码、更新 `tool_manifest.yaml`（菜单/架子命令、`source`、依赖等）。
-3. 在 Maya 中调试：
+## 解析共享依赖与 bundle cache
+- `requirements/packages.yaml` 采用 ShotGrid 风格描述符，按类别声明可复用资源：
+  - `python`：共享库（如 `zxtUI_Library`）
+  - `tool_roots`：工具代码根目录，会同步写入 `ZXT_MAYA_PACKAGE_ROOTS`
+- 支持的 `location.type`：`path`、`git`、`github_release`、`zip`
+- 解析结果默认缓存到 `%APPDATA%\zxtTools\bundle_cache`，缓存目录名由 `cache_id` 或 “包名+版本” 组成
+- `setup_env.py` 提供 `text`/`bat`/`shell`/`json` 等输出格式，便于 launcher/CI 直接消费；若配置缺失字段，会抛出明确错误
+
+## 工具子仓开发流程
+1. 准备工作副本：
+   - 在 `tools/<ToolName>` 子模块中直接开发，或
+   - 使用 `git worktree` / 单独 clone 工具仓库，保持与主仓指针同步
+2. 编写/修改代码与 `tool_manifest.yaml`，必要时更新工具自带 `requirements/`
+3. 启动 Maya 后通过脚本编辑器热重载：
    ```python
    import importlib, zxtMaya_M2Ue
    importlib.reload(zxtMaya_M2Ue)
    zxtMaya_M2Ue.show()
    ```
-4. 跑工具仓自己的测试（可以在仓库添加 pytest/flake8 等 CI）。
-5. 提交并推送：`git commit` → `git push`。
+4. 在工具仓运行自有测试或手动验证 UI 行为；提交并 push 新的 commit
 
-> 若想在其它路径开发，可使用 `git worktree` 或单独 clone，但最终需要把改动同步回 `tools/<ToolName>`，以便 Maya 加载最新代码。
-
-## 同步到主仓
-1. 在主仓根目录拉最新：`git pull`。
-2. 解析共享依赖：`python tools/setup_env.py --env maya --format text`（或在 CI/Launcher 中运行 resolver），确认 `bundle_cache` 新版本。
-3. 更新子模块指针（可封装脚本）：
-   ```bash
-   git submodule update --remote tools/zxtMaya_M2Ue
-   git add tools/zxtMaya_M2Ue
-   ```
-2. 更新子模块指针（可封装脚本）：
-   ```bash
-   git submodule update --remote tools/zxtMaya_M2Ue
-   git add tools/zxtMaya_M2Ue
-   ```
-4. 运行校验脚本：
-   ```bash
+## 回到主仓同步改动
+1. 更新子模块指针：`git submodule update --remote tools/<ToolName>`
+2. 将变更加入暂存：`git add tools/<ToolName>`
+3. 重新生成 `.mod` 并校验 manifest：
+   ```powershell
    python tools/generate_mod.py --validate
    python tools/generate_mod.py --maya 2024
    ```
-5. 跑核心测试：`python -m pytest core/tests`。
-6. 提交并推送主仓：`git commit -m "Update zxtMaya_M2Ue"` → `git push`。
-7. 创建 PR，等待 CI（manifest 校验 + core pytest）通过后合并。
+4. 运行核心测试：`python -m pytest core/tests`
+5. 若 `requirements/packages.yaml` 有更新，记得重新执行 `setup_env.py`
 
-## 菜单与 manifest 约定
-- 每个工具需要 `tool_manifest.yaml`，字段包括 `tool`、`menus`、`shelves`、`dependencies`。
-- 菜单层级来自 `menus[].menu` → `menus[].category` → `menus[].items[]`。
-- 命令使用纯 Python 代码，`source: python`；如需 MEL，可设置 `source: mel`。
-- `userSetup.py` 会自动把工具目录和 `scripts/`、`scripts/packages` 加入 `sys.path`，无需额外设置。
+## 调试与菜单重建
+- 如需刷新菜单/工具架，可在 Maya 中执行：
+  ```python
+  from core.menu_builder import MenuBuilder
+  from core.package_manager import PackageManager
+  from core.config import Config
+  MenuBuilder().rebuild(PackageManager(Config.get()))
+  ```
+- `setup_env.py` 写入的 `ZXT_MAYA_PACKAGE_ROOTS` 会被 `core.config.Config` 读取，确保 bundle cache 中的工具也能被自动加载
 
-## 运行 / 调试流程
-1. 双击 `start_maya_suite.bat` 启动 Maya，菜单名默认 `zxtMaya Tools`。
-2. 修改工具代码后，可在 Maya Script Editor 中使用 `MenuBuilder` 重新生成菜单：
-   ```python
-   from core.menu_builder import MenuBuilder
-   from core.package_manager import PackageManager
-   from core.config import Config
-   MenuBuilder().rebuild(PackageManager(Config.get()))
-   ```
+## CI、提交与 PR
+- 提交信息使用祈使句，例如 `Add github_release resolver`
+- PR 描述需包含：改动范围、执行的命令（解析器、`generate_mod.py`、pytest 等）、更新的文档或启动脚本
+- 主仓 CI 会运行 manifest 校验与 `python -m pytest core/tests`；工具仓可按需配置各自的 pytest/lint
+- 涉及菜单或 UI 变更时，建议附上关键截图 / 录屏，便于审查
 
-## CI 约定
-- 主仓 CI（`.github/workflows/ci.yml`）会执行 manifest 校验、生成 `.mod`、跑 `core/tests`。
-- 工具仓可根据需要自行配置 CI（pytest、lint、manifest schema 校验等），推送后再更新主仓指针。
-
-## 常见问题
-- **菜单点击报 `ModuleNotFoundError`**：确认 `tool_manifest.yaml` 中命令引用的模块位于工具目录下，并检查 `userSetup.py` 是否已加载最新路径。
-- **Qt 版本不兼容**：编写 Qt 代码时按顺序尝试 PySide2 → PySide6 → PyQt5，确保 fallback 分支导入 Maya API（`OpenMayaUI` 等）。
-- **子模块指针未更新**：推完工具仓后记得运行 `git submodule update --remote tools/<ToolName>` 并在主仓提交。
-
-## 清理建议
-- 可删除 `core/.pytest_cache/`、`core/zxtMaya_ToolsCore.code-workspace` 等编辑器缓存文件，避免污染仓库。
-
+## 常见问题排查
+- **ModuleNotFoundError**：确认 `tool_manifest.yaml` 中的 `scripts` 目录已被 resolver 写入 `PYTHONPATH`，并检查 `ZXT_MAYA_PACKAGE_ROOTS`
+- **PySide 相关错误**：确保工具兼容 PySide2/PySide6，并核对 Maya 自带 Qt 版本
+- **bundle cache 冲突**：删除 `%APPDATA%\zxtTools\bundle_cache/<包名>` 后重新执行 `python tools/setup_env.py --env maya`
